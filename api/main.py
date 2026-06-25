@@ -23,3 +23,7 @@ def redis_check():
         return {"redis": "connecté", "host": REDIS_HOST}
     except redis.exceptions.RedisError as err:
         return {"redis": "injoignable", "host": REDIS_HOST, "erreur": str(err)}
+
+@app.get("/version")
+def version():
+    return {"version": "0.1.0"}

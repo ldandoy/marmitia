@@ -1,0 +1,18 @@
+name: CI/CD
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construire l'image api
+        run: docker build -t marmitia-api ./api
+      - name: Lancer le conteneur
+        run: docker run -d -p 8000:8000 --name api marmitia-api
+      - name: Smoke test sur /health
+        run: |
+          sleep 3
+          curl --fail http://localhost:8000/health
