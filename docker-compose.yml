@@ -21,7 +21,7 @@ services:
     build: ./worker
     environment:
       REDIS_HOST: redis
-      DATABASE_URL: postgresql://marmitia:secret@db:5432/marmitia
+      DATABASE_URL: postgresql://marmitia:${POSTGRES_PASSWORD:-secret}@db:5432/marmitia
     depends_on:
       db: 
         condition: service_healthy
@@ -32,7 +32,7 @@ services:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: marmitia
-      POSTGRES_PASSWORD: secret
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secret}
       POSTGRES_DB: marmitia
     volumes:
       - donnees-db:/var/lib/postgresql/data
